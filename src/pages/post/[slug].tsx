@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useEffect } from 'react';
-import { RichText } from 'prismic-dom';
+import { PrismicRichText } from '@prismicio/react';
 import Header from '../../components/Header';
 
 import { getPrismicClient } from '../../services/prismic';
@@ -29,16 +29,26 @@ interface PostProps {
   post: Post;
 }
 
-export default function Post({ post }: PostProps): JSX.Element {
+export default function Post({ post }: PostProps, test): JSX.Element {
   useEffect(() => {
-    console.log('post', post);
-  }, [post]);
+    console.log('post', test);
+  }, [test]);
   return (
     <div className={commonStyles.container}>
       <Header />
       <main>
         <img src="" alt="" />
-        <section>content</section>
+        <section>
+          {post.data.content.map(content => {
+            console.log('content', content);
+            return (
+              <article key={content.heading}>
+                <h2>{content.heading}</h2>
+                <PrismicRichText field={content.body}  />
+              </article>
+            );
+          })}
+        </section>
       </main>
     </div>
   );
@@ -57,20 +67,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const prismic = getPrismicClient({});
   const { slug } = params;
-  const response = await prismic.getByUID('posts', slug);
-  // const post = {
-  //   ...response,
-  //   data: {
-  //     ...response.data,
-  //     title: RichText.asText(response.data.title),
-  //     author: RichText.asText(response.data.author),
-  //     content: RichText.asHtml(response.data.content),
-  //   },
-  // };
+  const post = await prismic.getByUID('posts', slug);
 
   return {
     props: {
-      post: response,
+      post,
     },
   };
 };
