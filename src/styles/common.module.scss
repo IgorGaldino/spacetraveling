@@ -1,10 +1,21 @@
 .container {
   max-width: 700px;
   margin: 0 auto;
-  padding: 0 2rem;
   height: calc(100vh - 5rem);
 
   display: flex;
   flex-flow: column;
 
+}
+
+.info {
+  color: var(--info);
+  display: flex;
+  gap: 1rem;
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
 }
