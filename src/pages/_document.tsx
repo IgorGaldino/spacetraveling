@@ -3,8 +3,9 @@ import Document, { Head, Html, Main, NextScript } from 'next/document';
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html>
+      <Html lang="pt-br">
         <Head>
+          <title>spacetraveling</title>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"
@@ -14,6 +15,10 @@ export default class MyDocument extends Document {
           <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;700;900&display=swap"
             rel="stylesheet"
+          />
+          <meta
+            name="description"
+            content="Spacetraveling é um sistema de para leitura de artigos"
           />
         </Head>
 
